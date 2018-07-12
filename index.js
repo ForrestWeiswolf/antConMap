@@ -8,3 +8,17 @@ const map = new mapbox.Map({
 	zoom: 11,
 	style: "mapbox://styles/mapbox/streets-v10"
 });
+
+function createMarker(lat, long, color){
+	console.log("marker at", lat, long)
+	const marker = document.createElement('div')
+	marker.className = 'marker'
+  marker.style.width = '5px';
+	marker.style.height = '5px';
+	marker.style.borderRadius = '50%'
+	marker.style.backgroundColor = color
+
+  return new mapbox.Marker(marker).setLngLat([lat, long]).addTo(map)
+}
+
+createMarker(-73.969, 40.690, '#aa0000')
