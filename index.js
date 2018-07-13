@@ -1,5 +1,5 @@
 // import { map, createMarker } from './map.js'
-import coordListPromise from './api.js'
+import {antConCoordsPromise, bBuildCoordsPromise} from './api.js'
 
 import mapbox from "mapbox-gl";
 
@@ -13,7 +13,6 @@ const nycMap = new mapbox.Map({
 });
 
 function createMarker(lat, long, color, map){
-	console.log('marker at', lat, long)
 	const marker = document.createElement('div')
   marker.style.width = '5px';
 	marker.style.height = '5px';
@@ -23,10 +22,16 @@ function createMarker(lat, long, color, map){
   return new mapbox.Marker(marker).setLngLat([long, lat]).addTo(map)
 }
 
-coordListPromise.then(coordList => {
+antConCoordsPromise.then(coordList => {
 	coordList.forEach(coords => {
 		console.log(coords[0], coords[1])
-		createMarker(coords[0], coords[1], '#aa0000', nycMap)
+		createMarker(coords[0], coords[1], '#000044', nycMap)
 	})
 })
 
+bBuildCoordsPromise.then(coordList => {
+	coordList.forEach(coords => {
+		console.log(coords[0], coords[1])
+		createMarker(coords[0], coords[1], '#440000', nycMap)
+	})
+})
