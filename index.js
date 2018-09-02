@@ -1,25 +1,25 @@
 // import { map, createMarker } from './map.js'
-import {antConCoordsPromise, bBuildCoordsPromise} from './api.js'
+import { antConCoordsPromise, bBuildCoordsPromise } from './api.js'
 
-import mapbox from "mapbox-gl";
+import mapbox from 'mapbox-gl';
 
 mapbox.accessToken = 'pk.eyJ1IjoiZm9ycmVzdHdlaXN3b2xmIiwiYSI6ImNqamlvYjhrYzFkbGYzcW14N3p1MndhYjUifQ.5ZKqFpNuNfIg50-k2l7gBA';
 
 const nycMap = new mapbox.Map({
-	container: "map",
+	container: 'map',
 	center: [-73.969, 40.689],
 	zoom: 11,
-	style: "mapbox://styles/mapbox/streets-v10"
+	style: 'mapbox://styles/mapbox/light-v9'
 });
 
-function createMarker(lat, long, color, map){
+function createMarker(lat, long, color, map) {
 	const marker = document.createElement('div')
-  marker.style.width = '5px';
+	marker.style.width = '5px';
 	marker.style.height = '5px';
 	marker.style.borderRadius = '50%'
 	marker.style.backgroundColor = color
 
-  return new mapbox.Marker(marker).setLngLat([long, lat]).addTo(map)
+	return new mapbox.Marker(marker).setLngLat([long, lat]).addTo(map)
 }
 
 antConCoordsPromise.then(coordList => {
