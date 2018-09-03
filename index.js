@@ -22,16 +22,31 @@ function createMarker(lat, long, color, map) {
 	return new mapbox.Marker(marker).setLngLat([long, lat]).addTo(map)
 }
 
-antConCoordsPromise.then(coordList => {
+let totalLat = 0
+let totalLong = 0
+let numCoords = 0
+
+const antConMarkers = antConCoordsPromise.then(coordList => {
 	coordList.forEach(coords => {
-		console.log(coords[0], coords[1])
-		createMarker(coords[0], coords[1], '#000044', nycMap)
+		totalLat += parseFloat(coords[0])
+		totalLong += parseFloat(coords[1])
+		numCoords++
+		createMarker(coords[0], coords[1], '#000090', nycMap)
 	})
 })
 
-bBuildCoordsPromise.then(coordList => {
+const bBuildMarkers = bBuildCoordsPromise.then(coordList => {
 	coordList.forEach(coords => {
-		console.log(coords[0], coords[1])
-		createMarker(coords[0], coords[1], '#440000', nycMap)
+		totalLat += parseFloat(coords[0])
+		totalLong += parseFloat(coords[1])
+		numCoords++
+
+		createMarker(coords[0], coords[1], '#900000', nycMap)
 	})
+})
+
+Promise.all([antConMarkers, bBuildMarkers]).then(() => {
+	const center = [totalLong / numCoords, totalLat / numCoords].map(coord => parseFloat(coord.toFixed(3)))
+	console.log(center)
+	nycMap.jumpTo({center})
 })
